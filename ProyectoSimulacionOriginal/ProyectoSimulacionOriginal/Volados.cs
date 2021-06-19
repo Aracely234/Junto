@@ -18,6 +18,17 @@ namespace ProyectoSimulacionOriginal
         int ad;
         double apuesta, apuestaoficial;
         double meta;
+        public static double a;
+        public static double c;
+        public static double Xo;
+        public static double M;
+        double n, modulo, m = 0,acumulador =0;
+        public static string winer = "si";
+        public static string over = "no";
+        public static string quiebre = "Quiebre";
+
+
+        double[] random = new double[100000];
         public Volados()
         {
             InitializeComponent();
@@ -25,8 +36,29 @@ namespace ProyectoSimulacionOriginal
 
         private void button2_Click(object sender, EventArgs e)
         {
-            
 
+            //optención de valores para las variables
+            double.TryParse(tbA4.Text, out a);
+            double.TryParse(tbC4.Text, out c);
+            double.TryParse(tbXo4.Text, out Xo);
+            double.TryParse(tbM4.Text, out M);
+            double.TryParse(tbn4.Text, out n);
+            for (int i = 0; i < n; i++)
+            {
+                modulo = (a * Xo + c) % M;
+                random[i] = modulo / M;
+                double redoneado = (Math.Round(random[i], 5));
+                ad = dataGridView3.Rows.Add();
+                dataGridView3.Rows[ad].Cells[0].Value = (i + 1).ToString();
+                dataGridView3.Rows[ad].Cells[1].Value = redoneado.ToString();
+
+                acumulador += random[i];
+
+                m = modulo;
+                Xo = m;
+
+
+            }
             //if (dataGridView1.Rows[0].Cells[1].Value == null)
             //{
             //    MessageBox.Show("No se ha generado ningun numero pseudoalatodio");
@@ -43,9 +75,7 @@ namespace ProyectoSimulacionOriginal
                 //double.TryParse(tbXo.Text, out Xo);
                 //double.TryParse(tbM.Text, out M);
 
-                string winer = "si";
-                string over = "no";
-                string quiebre = "quiebre";
+               
                 double nuevacantidad = 0;
                 double nuevaapuesta = 0;
                 double resetapu;
@@ -151,6 +181,59 @@ namespace ProyectoSimulacionOriginal
                 }
 
 
+            }
+
+            //se inicializan contadores para si y quiebre
+            int contador = 0;
+            int contadorq = 0;
+            double exitos = 0;
+            double perdidas = 0;
+            for (int j = 0; j < datavolados.RowCount; j++)
+            {
+                //cuando no hay nada dentro de una celda la vuelve string
+                if (datavolados.Rows[j].Cells[6].Value == null)
+                {
+                    datavolados.Rows[j].Cells[6].Value = "";
+                }
+                //se asignan los valores de cada celda a un string
+                string valors = datavolados.Rows[j].Cells[6].Value.ToString();
+                //se cuenta todos los que son si
+                if (valors == winer)
+                {
+                    contador++;
+                }
+                //se cuenta todos los que son quiebre
+                else if (valors == quiebre)
+                {
+                    contadorq++;
+
+                }
+            }
+            for (int i = 0; i < dataresultados.RowCount; i++)
+            {
+
+                dataresultados.Rows[i].Cells[0].Value = contador.ToString();
+                dataresultados.Rows[i].Cells[1].Value = contadorq.ToString();
+
+            }
+            exitos = double.Parse(dataresultados.Rows[0].Cells[0].Value.ToString());
+            perdidas = double.Parse(dataresultados.Rows[0].Cells[1].Value.ToString());
+            dataresultados.Rows[0].Cells[2].Value = exitos + perdidas;
+            dataresultados.Rows[0].Cells[3].Value = (exitos / (exitos + perdidas));
+            dataresultados.Rows[0].Cells[4].Value = (perdidas / (exitos + perdidas));
+            double probaexito = (exitos / (exitos + perdidas));
+            double probaperdida = (perdidas / (exitos + perdidas));
+            if (probaexito > probaperdida)
+            {
+                lbResultado.Text = $"La probabilidad de ganar es mas grande que la de quiebre felicidades estas de suerte te recomendamos apostar!!!";
+            }
+            else
+            {
+                lbResultado.Text = $"La probabilidad de ganar es menor que la de quiebre lamentablemente estas de mala suerte no te recomendamos apostar";
+            }
+            if(probaexito == probaperdida)
+            {
+                lbResultado.Text = $"La probabilidad de ganar y la de quiebre es la misma tienes las mismas probabilidades de ganar o perder si apuestas";
             }
         }
     }

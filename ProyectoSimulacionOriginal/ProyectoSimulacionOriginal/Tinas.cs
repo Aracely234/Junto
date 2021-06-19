@@ -13,13 +13,14 @@ namespace ProyectoSimulacionOriginal
     public partial class Tinas : Form
     {
         //variables Tinas
-        public static double a = 101;
-        public static double c = 221;
-        public static double Xo = 17;
-        public static double M = 17001;
+        public static double a;
+        public static double c;
+        public static double Xo;
+        public static double M ;
         public static int i;
         public static int b;
-        public static double numerodetinas = 4;
+        public static double n;
+        public static double numerodetinas;
         public static double modulo, m = 0, acumulador = 0;
         public static int ad;
         public static double[] random = new double[100000];
@@ -33,8 +34,19 @@ namespace ProyectoSimulacionOriginal
         public static double numcorridas;
         public static double vecesqueserenta = 0;
 
+        //boton para verificar si se puede o no rentar el camión
         private void btngenerarT_Click(object sender, EventArgs e)
         {
+            //obtención de los números pseudoaleatorios
+            
+                //optención de valores para las variables
+                double.TryParse(tbA5.Text, out a);
+                double.TryParse(tbC5.Text, out c);
+                double.TryParse(tbXo5.Text, out Xo);
+                double.TryParse(tbM5.Text, out M);
+                double.TryParse(tbn5.Text, out n);
+
+            
             double.TryParse(txttotaldecorridas.Text, out numcorridas);
             double.TryParse(txttinasporcorrida.Text, out numerodetinas);
 
@@ -65,6 +77,7 @@ namespace ProyectoSimulacionOriginal
             }
         }
 
+        //boton para verificar si se sigue rentando o se compra un camión
         private void btnrentacamion_Click(object sender, EventArgs e)
         {
 
@@ -126,6 +139,9 @@ namespace ProyectoSimulacionOriginal
             }
 
         }
+
+
+
         public void PesoDeTina(double redondeado)
         {
             double.TryParse(txtpesotina1.Text, out t1);
@@ -168,6 +184,161 @@ namespace ProyectoSimulacionOriginal
         public Tinas()
         {
             InitializeComponent();
+        }
+
+        //-------------------------------------------------//
+        // ---------- Validaciones -------------------- //
+
+        private void txtpesotina1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSymbol(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSurrogate(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsNumber(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+        }
+
+        private void txtmedia_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSymbol(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSurrogate(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+
+            else if (Char.IsNumber(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+        }
+
+        private void txtpesotina2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSymbol(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSurrogate(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+
+            else if (Char.IsNumber(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+        }
+
+        private void txttotaldecorridas_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSymbol(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSurrogate(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsPunctuation(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsNumber(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+        }
+
+        private void txttinasporcorrida_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSymbol(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSurrogate(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsPunctuation(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsNumber(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+        }
+
+        private void txtcostoderentadecamion_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSymbol(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSurrogate(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+
+            else if (Char.IsNumber(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+        }
+
+        private void txtcostodetransporte_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSymbol(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSurrogate(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+
+            else if (Char.IsNumber(e.KeyChar))
+            {
+                e.Handled = false;
+            }
         }
     }
 }

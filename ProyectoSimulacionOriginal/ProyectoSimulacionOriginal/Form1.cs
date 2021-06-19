@@ -18,111 +18,18 @@ namespace ProyectoSimulacionOriginal
         }
 
         //Variables para volados y generador de numeros pseudoalatorios
-        
         public static double a;
         public static double c;
         public static double Xo;
         public static double M;
         double n, modulo, m = 0, acumulador = 0, promedio, Zo;
-        double[] random = new double[100000];
+        double[] numpseudo = new double[100000];
         int ad;
 
-        private void btnPi_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            Pi p = new Pi();
-            p.Show();
-        }
-
-        private void tbA_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (Char.IsLetter(e.KeyChar))
-            {
-                e.Handled = true;
-                MessageBox.Show("No se permiten letras.");
-            }
-            if (Char.IsWhiteSpace(e.KeyChar))
-            {
-                e.Handled = true;
-                MessageBox.Show("No se permiten espacios.");
-            }
-        }
-
-        private void tbC_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (Char.IsLetter(e.KeyChar))
-            {
-                e.Handled = true;
-                MessageBox.Show("No se permiten letras.");
-            }
-            if (Char.IsWhiteSpace(e.KeyChar))
-            {
-                e.Handled = true;
-                MessageBox.Show("No se permiten espacios.");
-            }
-        }
-
-        private void tbXo_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (Char.IsLetter(e.KeyChar))
-            {
-                e.Handled = true;
-                MessageBox.Show("No se permiten letras.");
-            }
-            if (Char.IsWhiteSpace(e.KeyChar))
-            {
-                e.Handled = true;
-                MessageBox.Show("No se permiten espacios.");
-            }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            PruebaPromedios pp = new PruebaPromedios();
-            pp.Show();
-        }
-
-        private void tbM_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (Char.IsLetter(e.KeyChar))
-            {
-                e.Handled = true;
-                MessageBox.Show("No se permiten letras.");
-            }
-            if (Char.IsWhiteSpace(e.KeyChar))
-            {
-                e.Handled = true;
-                MessageBox.Show("No se permiten espacios.");
-            }
-        }
-
-        private void tbn_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (Char.IsLetter(e.KeyChar))
-            {
-                e.Handled = true;
-                MessageBox.Show("No se permiten letras.");
-            }
-            if (Char.IsWhiteSpace(e.KeyChar))
-            {
-                e.Handled = true;
-                MessageBox.Show("No se permiten espacios.");
-            }
-        }
-
-        private void btnTinas_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            Tinas t = new Tinas();
-            t.Show();
-        }
-
-        
-        
+        //GENERADOR DE NÚMEROS
         private void btnNoPseudoalatorio_Click(object sender, EventArgs e)
         {
-            if (tbA.Text == "" || tbC.Text == "" || tbXo.Text == "" || tbM.Text == ""|| tbn.Text == "")
+            if (tbA.Text == "" || tbC.Text == "" || tbXo.Text == "" || tbM.Text == "" || tbn.Text == "")
             {
                 MessageBox.Show("Revise que llenara los campos necesarios");
             }
@@ -135,18 +42,14 @@ namespace ProyectoSimulacionOriginal
             for (int i = 0; i < n; i++)
             {
                 modulo = (a * Xo + c) % M;
-                random[i] = modulo / M;
-                double redoneado = (Math.Round(random[i], 5));
+                numpseudo[i] = modulo / M;
+                double redoneado = (Math.Round(numpseudo[i], 5));
                 ad = dataGridView1.Rows.Add();
                 dataGridView1.Rows[ad].Cells[0].Value = (i + 1).ToString();
                 dataGridView1.Rows[ad].Cells[1].Value = redoneado.ToString();
-
-                acumulador += random[i];
-
+                acumulador += numpseudo[i];
                 m = modulo;
                 Xo = m;
-
-
             }
 
             //obtenemos el promedio de los números pseodoaleatorios
@@ -156,16 +59,198 @@ namespace ProyectoSimulacionOriginal
             //obtenemos la distribución normal
             Zo = ((Math.Sqrt(n)) * (promedio - 0.5)) / (Math.Sqrt(0.083333333));
             lbldisnor2.Text = (Math.Round(Zo, 5)).ToString();
-
-
         }
 
-        
+
+        //Boton para prueba de promedios
+        private void btnpruebapromedios_Click(object sender, EventArgs e)
+        {
+            PruebaPromedios pp = new PruebaPromedios();
+            pp.lblpromedio2.Text = lblpromedio.Text;
+            pp.lbldisnor.Text = lbldisnor2.Text;
+            pp.Show();
+        }
+
+        //boton para prueba de distancia
+        private void PDistancia_Click(object sender, EventArgs e)
+        {
+
+            Pdistancia pd = new Pdistancia();
+            pd.tbA2.Text = tbA.Text;
+            pd.tbC2.Text = tbC.Text;
+            pd.tbM2.Text = tbM.Text;
+            pd.tbXo2.Text = tbXo.Text;
+            pd.tbn2.Text = tbn.Text;
+            pd.nn.Text = tbn.Text;
+            pd.Show();
+        }
+
+        //boton para aplicación volados
         private void btnV_Click(object sender, EventArgs e)
         {
-            this.Hide();
+
             Volados v = new Volados();
+            v.tbA4.Text = tbA.Text;
+            v.tbC4.Text = tbC.Text;
+            v.tbM4.Text = tbM.Text;
+            v.tbXo4.Text = tbXo.Text;
+            v.tbn4.Text = tbn.Text;
             v.Show();
+        }
+
+        //Boton para aplicación de tinas
+        private void btnTinas_Click(object sender, EventArgs e)
+        {
+
+            Tinas t = new Tinas();
+            t.tbA5.Text = tbA.Text;
+            t.tbC5.Text = tbC.Text;
+            t.tbM5.Text = tbM.Text;
+            t.tbXo5.Text = tbXo.Text;
+            t.tbn5.Text = tbn.Text;
+            t.Show();
+        }
+
+        //boton para mandar a aplicación de PI
+        private void btnPi_Click(object sender, EventArgs e)
+        {
+           
+            Pi p = new Pi();
+            p.tbA3.Text = tbA.Text;
+            p.tbC3.Text = tbC.Text;
+            p.tbM3.Text = tbM.Text;
+            p.tbXo3.Text = tbXo.Text;
+            p.tbn3.Text = tbn.Text;
+            p.Show();
+        }
+
+        //boton para mostrar información de nosotros
+        private void btnsobrenosotros_Click(object sender, EventArgs e)
+        {
+            Sobrenosotros f = new Sobrenosotros();
+            f.Show();
+        }
+
+
+        //--------------------------------------------------------------
+                                //Validaciones
+        private void tbM_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSymbol(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSurrogate(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsPunctuation(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsNumber(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+        }
+
+        private void tbn_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSymbol(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSurrogate(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsPunctuation(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsNumber(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+        }
+        private void tbA_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSymbol(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSurrogate(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsPunctuation(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsNumber(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+        }
+
+        private void tbC_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSymbol(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSurrogate(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsPunctuation(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsNumber(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+        }
+
+        private void tbXo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSymbol(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSurrogate(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsPunctuation(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsNumber(e.KeyChar))
+            {
+                e.Handled = false;
+            }
         }
     }
 }

@@ -17,28 +17,7 @@ namespace ProyectoSimulacionOriginal
         double columnatabla, filatabla, vtablas, area2;
         int indexC = 0, indexR = 0;
 
-        private void btnPromedio_Click(object sender, EventArgs e)
-        {
-            lblpromedio2.Visible = true;
-            lbldisnor.Visible = true;
-            Form1 f = new Form1();
-            double vcalculado = double.Parse(lbldisnor.Text);
-            if (vcalculado <= vtablas)
-            {
-                lblRespuesta.Text = "Los números están distribuidos uniformemente de acuerdo a la prueba de promedios.";
-            }
-            else if (vcalculado > vtablas && vtablas != 0)
-            {
-                lblRespuesta.Text = "Los números NO están distribuidos uniformemente de acuerdo a la prueba de promedios.";
-
-            }
-            else if (vtablas == 0)
-            {
-                lblRespuesta.Text = "Calcula el valor de tablas para saber si los números están distribuidos uniformemente o no.";
-
-            }
-        }
-
+        //Boton para buscar valor de tablas
         private void btnPruebaPromedio_Click(object sender, EventArgs e)
         {
             if (txtNivelSignificancia.TextLength == 0)
@@ -479,11 +458,58 @@ namespace ProyectoSimulacionOriginal
             }
         }
 
+   
+        //Boton para realizar prueba de promedio
+        private void btnPromedio_Click(object sender, EventArgs e)
+        {
+            lblpromedio2.Visible = true;
+            lbldisnor.Visible = true;
+            Form1 f = new Form1();
+            double vcalculado = double.Parse(lbldisnor.Text);
+            if (vcalculado <= vtablas)
+            {
+                lblRespuesta.Text = "Los números están distribuidos uniformemente de acuerdo a la prueba de promedios.";
+            }
+            else if (vcalculado > vtablas && vtablas != 0)
+            {
+                lblRespuesta.Text = "Los números NO están distribuidos uniformemente de acuerdo a la prueba de promedios.";
+
+            }
+            else if (vtablas == 0)
+            {
+                lblRespuesta.Text = "Calcula el valor de tablas para saber si los números están distribuidos uniformemente o no.";
+
+            }
+        }
+
         bool vtpasar = false;
         double cct, rrt, cct2;
         public PruebaPromedios()
         {
             InitializeComponent();
+        }
+
+
+        //---------------------------------------------------------------------//
+                                        // Validación//
+        private void txtNivelSignificancia_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSymbol(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsSurrogate(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsNumber(e.KeyChar))
+            {
+                e.Handled = false;
+            }
         }
 
 
